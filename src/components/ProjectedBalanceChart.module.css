@@ -2,15 +2,20 @@
   margin-bottom: 2rem;
 }
 
-.barsWrapper {
-  position: relative;
+.heading {
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  opacity: 0.4;
+  margin-bottom: 12px;
 }
 
-.bars {
+.barsRow {
   display: flex;
   gap: 8px;
   align-items: flex-end;
-  height: 180px;
+  position: relative;
   padding: 0 4px;
 }
 
@@ -19,7 +24,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
 }
 
 .barValue {
@@ -28,11 +33,18 @@
   font-family: var(--font-mono);
 }
 
+.barTrack {
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+}
+
 .bar {
   width: 100%;
   border-radius: 6px 6px 2px 2px;
   transition: height 0.4s ease;
   position: relative;
+  min-height: 4px;
 }
 
 .actualDot {
@@ -55,19 +67,18 @@
   position: absolute;
   left: 0;
   right: 0;
+  height: 0;
   border-top: 1.5px dashed var(--color-red);
   pointer-events: none;
   z-index: 1;
-  display: flex;
-  justify-content: flex-end;
+  overflow: visible;
 }
 
 .targetText {
+  position: absolute;
+  right: 0;
+  top: 3px;
   font-size: 10px;
   color: var(--color-red);
   font-weight: 500;
-  position: relative;
-  top: 4px;
-  background: var(--color-bg);
-  padding: 0 4px;
 }
