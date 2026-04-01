@@ -11,7 +11,7 @@ import Header from "./components/Header";
 import TabSwitcher from "./components/TabSwitcher";
 import HeroCard from "./components/HeroCard";
 import Toast from "./components/Toast";
-import SyncPanel from "./components/SyncPanel";
+import SyncBadge from "./components/SyncBadge";
 import ProjectedBalanceChart from "./components/ProjectedBalanceChart";
 import Row from "./components/Row";
 import SpendingInput from "./components/SpendingInput";
@@ -51,8 +51,7 @@ export default function App() {
     date: new Date().toISOString().slice(0, 10),
   });
 
-  // Cloud sync
-  const [syncCode, setSyncCode] = usePersistedState("trip-tracker-sync-code", "");
+  // Cloud sync — auto-syncs all data to a single shared Firestore document
   const syncSetters = useMemo(() => ({
     setS, setActuals, setExpenses, setTripSpends, setTripConfig, setRates, setTripCurrency,
   }), [setS, setActuals, setExpenses, setTripSpends, setTripConfig, setRates, setTripCurrency]);
@@ -61,7 +60,7 @@ export default function App() {
     settings: s, actuals, expenses, tripSpends, tripConfig, rates, tripCurrency,
   }), [s, actuals, expenses, tripSpends, tripConfig, rates, tripCurrency]);
 
-  const { loadFromCloud, isSyncing } = useCloudSync(syncCode, allSyncState, syncSetters);
+  const { isSyncing } = useCloudSync(allSyncState, syncSetters);
 
   // Toast notifications
   const { toasts, addToast, removeToast } = useToast();
@@ -286,12 +285,7 @@ export default function App() {
         </div>
       )}
 
-      <SyncPanel
-        syncCode={syncCode}
-        setSyncCode={setSyncCode}
-        isSyncing={isSyncing}
-        onJoin={loadFromCloud}
-      />
+      <SyncBadge isSyncing={isSyncing} />
 
       <Toast toasts={toasts} onDismiss={removeToast} />
     </div>
