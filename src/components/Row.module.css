@@ -1,0 +1,43 @@
+.row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  transition: opacity 0.3s ease;
+}
+
+.checkbox {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.indicator {
+  width: 4px;
+  height: 32px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.content {
+  flex: 1;
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.note {
+  font-size: 11px;
+  opacity: 0.45;
+  margin-top: 1px;
+}
+
+.amount {
+  font-size: 16px;
+  font-weight: 600;
+  font-family: var(--font-mono);
+}

@@ -1,0 +1,118 @@
+.section {
+  margin-top: 1.5rem;
+}
+
+.heading {
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  opacity: 0.4;
+  margin-bottom: 12px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.label {
+  display: block;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  opacity: 0.5;
+  margin-bottom: 4px;
+}
+
+.input {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid rgba(128, 128, 128, 0.2);
+  border-radius: 6px;
+  font-size: 14px;
+  background: transparent;
+  color: inherit;
+  font-family: inherit;
+}
+
+.ratesDetails {
+  border: 0.5px solid rgba(128, 128, 128, 0.12);
+  border-radius: 10px;
+  padding: 0;
+}
+
+.ratesSummary {
+  padding: 10px 14px;
+  font-size: 12px;
+  font-weight: 500;
+  opacity: 0.5;
+  cursor: pointer;
+  list-style: none;
+}
+
+.ratesSummary::-webkit-details-marker {
+  display: none;
+}
+
+.ratesSummary::before {
+  content: "▸ ";
+}
+
+details[open] > .ratesSummary::before {
+  content: "▾ ";
+}
+
+.ratesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 8px;
+  padding: 0 14px 14px;
+}
+
+.rateRow {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.rateLabel {
+  font-size: 11px;
+  font-weight: 600;
+  font-family: var(--font-mono);
+  min-width: 40px;
+  opacity: 0.6;
+}
+
+.rateInput {
+  flex: 1;
+  width: 70px;
+  padding: 4px 6px;
+  border: 1px solid rgba(128, 128, 128, 0.15);
+  border-radius: 4px;
+  font-size: 12px;
+  font-family: var(--font-mono);
+  background: transparent;
+  color: inherit;
+  text-align: right;
+}
+
+.rateGBP {
+  font-size: 11px;
+  opacity: 0.4;
+}
+
+.resetBtn {
+  background: none;
+  border: 1px solid rgba(128, 128, 128, 0.2);
+  border-radius: 6px;
+  padding: 6px 14px;
+  font-size: 12px;
+  cursor: pointer;
+  color: inherit;
+  font-family: inherit;
+  opacity: 0.5;
+}

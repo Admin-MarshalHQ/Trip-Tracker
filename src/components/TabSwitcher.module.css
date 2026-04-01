@@ -1,0 +1,33 @@
+.tabBar {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 1.5rem;
+  padding: 3px;
+  border-radius: 10px;
+  background: rgba(128, 128, 128, 0.06);
+}
+
+.tab {
+  flex: 1;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: none;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  color: inherit;
+}
+
+.tabActive {
+  background: var(--color-background-primary, white);
+  opacity: 1;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.tabInactive {
+  background: transparent;
+  opacity: 0.5;
+  box-shadow: none;
+}

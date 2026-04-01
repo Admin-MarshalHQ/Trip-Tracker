@@ -1,0 +1,76 @@
+.bonus {
+  padding: 10px 14px;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.bonusActive {
+  background: rgba(239, 159, 39, 0.04);
+  border: 0.5px solid rgba(239, 159, 39, 0.15);
+}
+
+.bonusInactive {
+  background: rgba(128, 128, 128, 0.02);
+  border: 0.5px solid rgba(128, 128, 128, 0.06);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.indicator {
+  width: 4px;
+  height: 32px;
+  border-radius: 2px;
+  background: var(--color-orange);
+  flex-shrink: 0;
+}
+
+.content {
+  flex: 1;
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.sublabel {
+  font-size: 11px;
+  opacity: 0.45;
+  margin-top: 1px;
+}
+
+.amount {
+  font-size: 16px;
+  font-weight: 600;
+  font-family: var(--font-mono);
+}
+
+.sliderRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 4px;
+}
+
+.sliderBound {
+  font-size: 12px;
+  opacity: 0.4;
+}
+
+.slider {
+  flex: 1;
+  accent-color: var(--color-orange);
+}
+
+.sliderValue {
+  text-align: center;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: var(--font-mono);
+  margin-top: 4px;
+}

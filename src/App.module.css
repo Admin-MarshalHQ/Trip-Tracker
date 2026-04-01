@@ -1,0 +1,51 @@
+.container {
+  font-family: var(--font-sans);
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 2rem 0;
+}
+
+.sectionHeading {
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  opacity: 0.4;
+  margin-bottom: 12px;
+}
+
+.monthSection {
+  margin-bottom: 1.5rem;
+}
+
+.monthSectionLast {
+  margin-bottom: 2rem;
+}
+
+.monthGrid {
+  display: grid;
+  gap: 8px;
+}
+
+.footnote {
+  margin-top: 2rem;
+  font-size: 11px;
+  opacity: 0.3;
+  line-height: 1.5;
+}
+
+.emptyState {
+  text-align: center;
+  padding: 3rem 1rem;
+  opacity: 0.3;
+}
+
+.emptyTitle {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.emptySubtitle {
+  font-size: 13px;
+}

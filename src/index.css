@@ -1,0 +1,22 @@
+:root {
+  --color-green: #1D9E75;
+  --color-blue: #378ADD;
+  --color-red: #E24B4A;
+  --color-orange: #EF9F27;
+  --color-purple: #7F77DD;
+  --font-sans: 'DM Sans', 'Helvetica Neue', sans-serif;
+  --font-mono: 'DM Mono', monospace;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

@@ -1,0 +1,161 @@
+.section {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 0.5px solid rgba(128, 128, 128, 0.1);
+}
+
+.offlineBadge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  opacity: 0.4;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 0.5px solid rgba(128, 128, 128, 0.1);
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.toggleBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: 0.5px solid rgba(128, 128, 128, 0.2);
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 13px;
+  cursor: pointer;
+  color: inherit;
+  font-family: inherit;
+  opacity: 0.6;
+}
+
+.panel {
+  margin-top: 12px;
+  padding: 16px;
+  border-radius: 12px;
+  border: 0.5px solid rgba(128, 128, 128, 0.15);
+}
+
+.option {
+  padding: 8px 0;
+}
+
+.optionTitle {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.optionDesc {
+  font-size: 12px;
+  opacity: 0.45;
+  margin-bottom: 10px;
+}
+
+.actionBtn {
+  padding: 8px 18px;
+  border-radius: 8px;
+  border: none;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  background: var(--color-blue);
+  color: white;
+  font-family: inherit;
+}
+
+.divider {
+  text-align: center;
+  font-size: 12px;
+  opacity: 0.3;
+  padding: 8px 0;
+}
+
+.joinRow {
+  display: flex;
+  gap: 8px;
+}
+
+.codeInput {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid rgba(128, 128, 128, 0.2);
+  border-radius: 6px;
+  font-size: 16px;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  background: transparent;
+  color: inherit;
+  text-align: center;
+}
+
+.connected {
+  padding: 16px;
+  border-radius: 12px;
+  background: rgba(29, 158, 117, 0.04);
+  border: 0.5px solid rgba(29, 158, 117, 0.15);
+}
+
+.statusRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.statusText {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-green);
+}
+
+.codeDisplay {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: rgba(128, 128, 128, 0.04);
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
+.codeLabel {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  opacity: 0.5;
+}
+
+.code {
+  font-size: 18px;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  letter-spacing: 0.15em;
+}
+
+.hint {
+  font-size: 12px;
+  opacity: 0.4;
+  margin-bottom: 12px;
+}
+
+.disconnectBtn {
+  background: none;
+  border: 1px solid rgba(226, 75, 74, 0.3);
+  border-radius: 6px;
+  padding: 6px 14px;
+  font-size: 12px;
+  cursor: pointer;
+  color: var(--color-red);
+  font-family: inherit;
+}

@@ -1,0 +1,62 @@
+.chart {
+  margin-bottom: 2rem;
+}
+
+.bars {
+  display: flex;
+  gap: 8px;
+  align-items: flex-end;
+  height: 180px;
+  padding: 0 4px;
+}
+
+.barColumn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.barValue {
+  font-size: 13px;
+  font-weight: 600;
+  font-family: var(--font-mono);
+}
+
+.bar {
+  width: 100%;
+  border-radius: 6px 6px 2px 2px;
+  transition: height 0.4s ease;
+  position: relative;
+}
+
+.actualDot {
+  position: absolute;
+  top: -6px;
+  right: -4px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--color-green);
+  border: 2px solid white;
+}
+
+.barLabel {
+  font-size: 12px;
+  opacity: 0.5;
+}
+
+.targetLine {
+  margin-top: 8px;
+  padding: 6px 0;
+  border-top: 1.5px dashed var(--color-red);
+  display: flex;
+  justify-content: flex-end;
+}
+
+.targetText {
+  font-size: 11px;
+  color: var(--color-red);
+  font-weight: 500;
+}

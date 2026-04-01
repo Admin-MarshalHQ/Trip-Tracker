@@ -1,0 +1,56 @@
+.spending {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: rgba(226, 75, 74, 0.03);
+  border: 0.5px solid rgba(226, 75, 74, 0.1);
+}
+
+.indicator {
+  width: 4px;
+  height: 32px;
+  border-radius: 2px;
+  background: var(--color-red);
+  flex-shrink: 0;
+}
+
+.content {
+  flex: 1;
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.note {
+  font-size: 11px;
+  opacity: 0.45;
+  margin-top: 1px;
+}
+
+.inputWrapper {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.prefix {
+  font-size: 14px;
+  color: var(--color-red);
+}
+
+.input {
+  width: 70px;
+  padding: 4px 6px;
+  border: 1px solid rgba(226, 75, 74, 0.2);
+  border-radius: 5px;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: var(--font-mono);
+  color: var(--color-red);
+  background: transparent;
+  text-align: right;
+}

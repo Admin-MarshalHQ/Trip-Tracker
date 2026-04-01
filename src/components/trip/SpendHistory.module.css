@@ -1,0 +1,135 @@
+.heading {
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  opacity: 0.4;
+  margin-bottom: 12px;
+}
+
+.categories {
+  margin-bottom: 1.5rem;
+}
+
+.pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.pill {
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  cursor: pointer;
+  font-family: inherit;
+  background: rgba(128, 128, 128, 0.06);
+  border: 0.5px solid rgba(128, 128, 128, 0.15);
+  color: inherit;
+  transition: all 0.15s ease;
+}
+
+.pillActive {
+  font-weight: 600;
+}
+
+.pillLabel {
+  opacity: 0.6;
+}
+
+.pillAmount {
+  font-weight: 600;
+  font-family: var(--font-mono);
+  margin-left: 8px;
+}
+
+.dateGroup {
+  margin-bottom: 16px;
+}
+
+.dateHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+  margin-bottom: 6px;
+  border-bottom: 0.5px solid rgba(128, 128, 128, 0.1);
+  font-size: 12px;
+  font-weight: 600;
+  opacity: 0.5;
+}
+
+.dateTotal {
+  font-family: var(--font-mono);
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: rgba(128, 128, 128, 0.03);
+  border: 0.5px solid rgba(128, 128, 128, 0.08);
+  margin-bottom: 6px;
+}
+
+.indicator {
+  width: 4px;
+  height: 28px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.content {
+  flex: 1;
+}
+
+.itemName {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.itemMeta {
+  font-size: 11px;
+  opacity: 0.45;
+  margin-top: 1px;
+}
+
+.currencyNote {
+  font-family: var(--font-mono);
+  font-size: 10px;
+}
+
+.amount {
+  font-size: 15px;
+  font-weight: 600;
+  font-family: var(--font-mono);
+}
+
+.deleteBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  opacity: 0.25;
+  padding: 4px;
+  line-height: 1;
+  color: inherit;
+}
+
+.empty {
+  text-align: center;
+  padding: 3rem 1rem;
+  opacity: 0.3;
+}
+
+.emptyTitle {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.emptySubtitle {
+  font-size: 13px;
+}

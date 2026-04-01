@@ -1,0 +1,78 @@
+.section {
+  margin-bottom: 2rem;
+}
+
+.card {
+  padding: 1rem 1.25rem;
+  border-radius: 12px;
+  border: 0.5px solid rgba(128, 128, 128, 0.12);
+  background: rgba(128, 128, 128, 0.02);
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  font-size: 14px;
+}
+
+.itemBorder {
+  border-bottom: 0.5px solid rgba(128, 128, 128, 0.1);
+}
+
+.itemLabel {
+  opacity: 0.6;
+}
+
+.itemAmount {
+  font-weight: 500;
+  font-family: var(--font-mono);
+}
+
+.totalRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0 4px;
+  margin-top: 4px;
+  border-top: 1.5px solid rgba(128, 128, 128, 0.15);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.totalAmount {
+  font-family: var(--font-mono);
+  font-size: 16px;
+}
+
+.firepower {
+  margin-top: 12px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, rgba(55, 138, 221, 0.06), rgba(127, 119, 221, 0.06));
+  border: 1px solid rgba(55, 138, 221, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.firepowerLabel {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  opacity: 0.4;
+  margin-bottom: 2px;
+}
+
+.firepowerSublabel {
+  font-size: 11px;
+  opacity: 0.4;
+}
+
+.firepowerAmount {
+  font-size: 22px;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  color: var(--color-blue);
+}

@@ -1,0 +1,56 @@
+.toggleBtn {
+  background: none;
+  border: 0.5px solid rgba(128, 128, 128, 0.2);
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 13px;
+  cursor: pointer;
+  color: inherit;
+  opacity: 0.6;
+}
+
+.panel {
+  margin-top: 12px;
+  padding: 16px;
+  border-radius: 12px;
+  border: 0.5px solid rgba(128, 128, 128, 0.15);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.label {
+  display: block;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  opacity: 0.5;
+  margin-bottom: 4px;
+}
+
+.input {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid rgba(128, 128, 128, 0.2);
+  border-radius: 6px;
+  font-size: 14px;
+  background: transparent;
+  color: inherit;
+}
+
+.resetRow {
+  grid-column: 1 / -1;
+  margin-top: 4px;
+}
+
+.resetBtn {
+  background: none;
+  border: 1px solid rgba(226, 75, 74, 0.3);
+  border-radius: 6px;
+  padding: 6px 14px;
+  font-size: 12px;
+  cursor: pointer;
+  color: var(--color-red);
+  font-family: inherit;
+}

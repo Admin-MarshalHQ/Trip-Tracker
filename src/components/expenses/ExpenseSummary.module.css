@@ -1,0 +1,37 @@
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 1.5rem;
+}
+
+.card {
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.cardTotal {
+  background: rgba(128, 128, 128, 0.04);
+}
+
+.cardPaid {
+  background: rgba(29, 158, 117, 0.04);
+}
+
+.cardUnpaid {
+  background: rgba(226, 75, 74, 0.04);
+}
+
+.cardLabel {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  opacity: 0.4;
+  margin-bottom: 2px;
+}
+
+.cardValue {
+  font-size: 22px;
+  font-weight: 700;
+  font-family: var(--font-mono);
+}
