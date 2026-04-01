@@ -128,7 +128,7 @@ export default function App() {
       for (let i = 0; i < dayCount; i++) {
         const d = new Date(start);
         d.setDate(d.getDate() + i);
-        const dateStr = d.toISOString().slice(0, 10);
+        const dateStr = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
         newSpends.push({
           description: desc,
           category: tripDraft.category,
