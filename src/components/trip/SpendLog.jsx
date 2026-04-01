@@ -62,6 +62,8 @@ export default function SpendLog({ draft, setDraft, onAdd, currency, setCurrency
             ))}
           </select>
         </div>
+      </div>
+      <div className={styles.dateRow}>
         <div className={styles.field}>
           <label className={styles.label} htmlFor="trip-date">Date</label>
           <input
@@ -73,7 +75,7 @@ export default function SpendLog({ draft, setDraft, onAdd, currency, setCurrency
           />
         </div>
         <div className={styles.field}>
-          <label className={styles.label} htmlFor="trip-end-date">End date</label>
+          <label className={styles.label} htmlFor="trip-end-date">End date (splits cost)</label>
           <input
             id="trip-end-date"
             type="date"
@@ -83,6 +85,8 @@ export default function SpendLog({ draft, setDraft, onAdd, currency, setCurrency
             onChange={(e) => setDraft(p => ({ ...p, endDate: e.target.value }))}
           />
         </div>
+      </div>
+      <div>
         <button
           type="button"
           onClick={onAdd}

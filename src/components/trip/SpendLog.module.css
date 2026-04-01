@@ -92,7 +92,8 @@
 }
 
 .addBtn {
-  padding: 8px 20px;
+  width: 100%;
+  padding: 10px 20px;
   border-radius: 8px;
   border: none;
   font-size: 13px;
@@ -102,13 +103,17 @@
   color: white;
   font-family: inherit;
   white-space: nowrap;
-  align-self: flex-end;
-  margin-bottom: 0;
   transition: transform 0.1s ease, opacity 0.2s ease;
 }
 
 .addBtn:active {
   transform: scale(0.97);
+}
+
+.dateRow {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
 }
 
 @media (max-width: 480px) {
@@ -118,10 +123,10 @@
   .bottomRow {
     flex-wrap: wrap;
   }
+  .dateRow {
+    flex-wrap: wrap;
+  }
   .field {
     min-width: calc(50% - 5px);
-  }
-  .addBtn {
-    width: 100%;
   }
 }
