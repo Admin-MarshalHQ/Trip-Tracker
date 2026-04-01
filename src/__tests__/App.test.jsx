@@ -22,10 +22,11 @@ describe('App', () => {
     expect(screen.getByRole('progressbar')).toBeInTheDocument();
   });
 
-  it('shows tab switcher with both tabs', () => {
+  it('shows tab switcher with all tabs', () => {
     render(<App />);
     expect(screen.getByRole('tab', { name: /savings/i })).toBeInTheDocument();
-    expect(screen.getByRole('tab', { name: /pre-trip expenses/i })).toBeInTheDocument();
+    expect(screen.getByRole('tab', { name: /pre-trip/i })).toBeInTheDocument();
+    expect(screen.getByRole('tab', { name: /in-trip/i })).toBeInTheDocument();
   });
 
   it('displays the departure info', () => {
