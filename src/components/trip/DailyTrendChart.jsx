@@ -30,15 +30,13 @@ export default function DailyTrendChart({ spends, rates, dailyBudget }) {
 
   if (days.length < 2) return null;
 
-  const budgetPct = maxVal > 0 ? (dailyBudget / maxVal) * 100 : 0;
+  // Budget line positioned in px relative to the 100px bar track
+  const budgetPx = maxVal > 0 ? (dailyBudget / maxVal) * 100 : 0;
 
   return (
     <div className={styles.section}>
       <div className={styles.heading}>Daily spending</div>
       <div className={styles.chartWrapper}>
-        <div className={styles.budgetLine} style={{ bottom: `${budgetPct}%` }}>
-          <span className={styles.budgetLabel}>{fmt(dailyBudget)}/day</span>
-        </div>
         <div className={styles.bars}>
           {days.map((d) => {
             const h = maxVal > 0 ? Math.max(4, (d.total / maxVal) * 100) : 4;
@@ -59,6 +57,9 @@ export default function DailyTrendChart({ spends, rates, dailyBudget }) {
               </div>
             );
           })}
+          <div className={styles.budgetLine} style={{ bottom: `${budgetPx + 17}px` }}>
+            <span className={styles.budgetLabel}>{fmt(dailyBudget)}/day</span>
+          </div>
         </div>
       </div>
     </div>
