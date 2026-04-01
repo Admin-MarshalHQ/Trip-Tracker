@@ -91,6 +91,11 @@
   background: rgba(128, 128, 128, 0.03);
   border: 0.5px solid rgba(128, 128, 128, 0.08);
   margin-bottom: 6px;
+  transition: background 0.15s ease;
+}
+
+.item:active {
+  background: var(--bg-card-hover);
 }
 
 .indicator {
@@ -124,6 +129,7 @@
   font-size: 15px;
   font-weight: 600;
   font-family: var(--font-mono);
+  white-space: nowrap;
 }
 
 .deleteBtn {
@@ -131,10 +137,15 @@
   border: none;
   cursor: pointer;
   font-size: 16px;
-  opacity: 0.45;
+  opacity: 0.6;
   padding: 4px;
   line-height: 1;
   color: inherit;
+  min-width: 44px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .empty {

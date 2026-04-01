@@ -37,8 +37,10 @@
 }
 
 .info {
-  background: #333;
+  background: rgba(30, 30, 30, 0.9);
   color: white;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
 .message {

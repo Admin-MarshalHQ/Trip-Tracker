@@ -2,6 +2,7 @@
   padding: 1rem 1.25rem;
   border-radius: 12px;
   border: 0.5px solid rgba(128, 128, 128, 0.12);
+  box-shadow: var(--shadow-card);
   margin-bottom: 1.5rem;
 }
 
@@ -103,6 +104,11 @@
   white-space: nowrap;
   align-self: flex-end;
   margin-bottom: 0;
+  transition: transform 0.1s ease, opacity 0.2s ease;
+}
+
+.addBtn:active {
+  transform: scale(0.97);
 }
 
 @media (max-width: 480px) {

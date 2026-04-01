@@ -8,6 +8,7 @@
 .card {
   border-radius: 8px;
   padding: 1rem;
+  box-shadow: var(--shadow-card);
 }
 
 .cardTotal {
@@ -34,6 +35,8 @@
   font-size: 22px;
   font-weight: 700;
   font-family: var(--font-mono);
+  line-height: 1.3;
+  white-space: nowrap;
 }
 
 @media (max-width: 480px) {
