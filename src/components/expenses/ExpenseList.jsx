@@ -1,11 +1,22 @@
 import { EXPENSE_CATEGORIES, CATEGORY_COLORS } from "../../constants/categories";
 import { fmt } from "../../utils/financial";
+import { exportToCSV } from "../../utils/export";
+import ConfirmDeleteButton from "../ConfirmDeleteButton";
 import styles from "./ExpenseList.module.css";
 
-export default function ExpenseList({ expenses, setExpenses }) {
+export default function ExpenseList({ expenses, setExpenses, onDelete }) {
   return (
     <div>
-      <div className={styles.heading}>All expenses</div>
+      <div className={styles.headingRow}>
+        <div className={styles.heading}>All expenses</div>
+        <button
+          type="button"
+          className={styles.exportBtn}
+          onClick={() => exportToCSV(expenses, ["item", "category", "amount", "paid"], "trip-expenses.csv")}
+        >
+          Export CSV
+        </button>
+      </div>
       <div className={styles.list}>
         {expenses.map((e) => {
           const c = CATEGORY_COLORS[e.category] || "#888780";
@@ -33,18 +44,13 @@ export default function ExpenseList({ expenses, setExpenses }) {
                 </select>
               </div>
               <div className={styles.amount}>{fmt(e.amount)}</div>
-              <button
-                type="button"
-                onClick={() => {
-                  if (window.confirm(`Remove "${e.item}"?`)) {
-                    setExpenses(p => p.filter(x => x.id !== e.id));
-                  }
-                }}
+              <ConfirmDeleteButton
+                onConfirm={() => onDelete(e)}
+                ariaLabel={`Delete ${e.item}`}
                 className={styles.deleteBtn}
-                aria-label={`Delete ${e.item}`}
               >
                 {"\u00D7"}
-              </button>
+              </ConfirmDeleteButton>
             </div>
           );
         })}

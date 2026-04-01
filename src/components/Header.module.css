@@ -7,7 +7,7 @@
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  opacity: 0.4;
+  opacity: 0.6;
   margin-bottom: 4px;
 }
 
@@ -20,6 +20,6 @@
 
 .subtitle {
   font-size: 14px;
-  opacity: 0.5;
+  opacity: 0.6;
   margin-top: 4px;
 }

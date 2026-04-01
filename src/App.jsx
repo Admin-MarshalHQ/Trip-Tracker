@@ -1,14 +1,16 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback } from "react";
 import { DEFAULT } from "./constants/defaults";
 import { COLORS } from "./constants/theme";
 import { TRIP_DEFAULTS, DEFAULT_RATES, CURRENCIES } from "./constants/trip";
 import { estimateNetBonus, estimateOneWeekNet } from "./utils/financial";
 import { usePersistedState } from "./hooks/usePersistedState";
 import { useCloudSync } from "./hooks/useCloudSync";
+import { useToast } from "./hooks/useToast";
 
 import Header from "./components/Header";
 import TabSwitcher from "./components/TabSwitcher";
 import HeroCard from "./components/HeroCard";
+import Toast from "./components/Toast";
 import SyncPanel from "./components/SyncPanel";
 import ProjectedBalanceChart from "./components/ProjectedBalanceChart";
 import Row from "./components/Row";
@@ -23,6 +25,7 @@ import CategoryBreakdown from "./components/expenses/CategoryBreakdown";
 import ExpenseList from "./components/expenses/ExpenseList";
 import SpendLog from "./components/trip/SpendLog";
 import BudgetTracker from "./components/trip/BudgetTracker";
+import DailyTrendChart from "./components/trip/DailyTrendChart";
 import SpendHistory from "./components/trip/SpendHistory";
 import TripSettings from "./components/trip/TripSettings";
 
@@ -60,6 +63,9 @@ export default function App() {
 
   const { loadFromCloud, isSyncing } = useCloudSync(syncCode, allSyncState, syncSetters);
 
+  // Toast notifications
+  const { toasts, addToast, removeToast } = useToast();
+
   const projections = useMemo(() => {
     const netNow = s.currentAcc + s.saver + s.edgeCredit - s.amexDebt;
     const esppTotal = s.esppAccum + s.esppMonthly * 1;
@@ -90,15 +96,27 @@ export default function App() {
 
   const handleAddExpense = () => {
     if (!draft.item || !draft.amount) return;
-    setExpenses(p => [...p, { ...draft, amount: parseFloat(draft.amount), id: Date.now() }]);
+    const name = draft.item.trim();
+    setExpenses(p => [...p, { ...draft, item: name, amount: parseFloat(draft.amount), id: Date.now() }]);
     setDraft({ item: "", category: draft.category, amount: "", paid: false });
+    addToast(`Added "${name}"`);
   };
+
+  const handleDeleteExpense = useCallback((expense) => {
+    setExpenses(p => p.filter(x => x.id !== expense.id));
+    addToast(`Removed "${expense.item}"`, {
+      type: "info",
+      undoAction: () => setExpenses(p => [...p, expense].sort((a, b) => a.id - b.id)),
+    });
+  }, [setExpenses, addToast]);
 
   const handleAddTripSpend = () => {
     if (!tripDraft.description || !tripDraft.amount) return;
     const currencyObj = CURRENCIES.find(c => c.code === tripCurrency);
+    const desc = tripDraft.description.trim();
     setTripSpends(p => [...p, {
       ...tripDraft,
+      description: desc,
       amount: parseFloat(tripDraft.amount),
       currency: tripCurrency,
       currencySymbol: currencyObj?.symbol || "",
@@ -110,11 +128,20 @@ export default function App() {
       amount: "",
       date: tripDraft.date,
     });
+    addToast(`Logged ${currencyObj?.symbol || ""}${tripDraft.amount}`);
   };
+
+  const handleDeleteTripSpend = useCallback((spend) => {
+    setTripSpends(p => p.filter(x => x.id !== spend.id));
+    addToast(`Removed "${spend.description}"`, {
+      type: "info",
+      undoAction: () => setTripSpends(p => [...p, spend].sort((a, b) => a.id - b.id)),
+    });
+  }, [setTripSpends, addToast]);
 
   return (
     <div className={styles.container}>
-      <Header target={s.target} />
+      <Header target={s.target} routeName={tripConfig.routeName} startDate={tripConfig.startDate} />
       <TabSwitcher tab={tab} setTab={setTab} expenseCount={expenses.length} tripSpendCount={tripSpends.length} />
 
       {tab === "savings" && (
@@ -207,7 +234,7 @@ export default function App() {
           {expenses.length > 0 && (<>
             <ExpenseSummary expenses={expenses} />
             <CategoryBreakdown expenses={expenses} />
-            <ExpenseList expenses={expenses} setExpenses={setExpenses} />
+            <ExpenseList expenses={expenses} setExpenses={setExpenses} onDelete={handleDeleteExpense} />
           </>)}
 
           {expenses.length === 0 && (
@@ -229,19 +256,25 @@ export default function App() {
             setCurrency={setTripCurrency}
           />
 
-          {tripSpends.length > 0 && (
+          {tripSpends.length > 0 && (<>
             <BudgetTracker
               spends={tripSpends}
               tripConfig={tripConfig}
               totalSavings={finalTotal}
               rates={rates}
             />
-          )}
+            <DailyTrendChart
+              spends={tripSpends}
+              rates={rates}
+              dailyBudget={tripConfig.dailyBudget}
+            />
+          </>)}
 
           <SpendHistory
             spends={tripSpends}
             setSpends={setTripSpends}
             rates={rates}
+            onDelete={handleDeleteTripSpend}
           />
 
           <TripSettings
@@ -259,6 +292,8 @@ export default function App() {
         isSyncing={isSyncing}
         onJoin={loadFromCloud}
       />
+
+      <Toast toasts={toasts} onDismiss={removeToast} />
     </div>
   );
 }

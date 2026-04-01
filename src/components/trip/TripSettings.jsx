@@ -1,5 +1,6 @@
 import { CURRENCIES, DEFAULT_RATES } from "../../constants/trip";
 import { parseFinancialInput } from "../../utils/validation";
+import ConfirmDeleteButton from "../ConfirmDeleteButton";
 import styles from "./TripSettings.module.css";
 
 export default function TripSettings({ tripConfig, setTripConfig, rates, setRates }) {
@@ -7,6 +8,17 @@ export default function TripSettings({ tripConfig, setTripConfig, rates, setRate
     <div className={styles.section}>
       <div className={styles.heading}>Trip budget settings</div>
       <div className={styles.grid}>
+        <div style={{ gridColumn: "1 / -1" }}>
+          <label className={styles.label} htmlFor="trip-name">Trip name</label>
+          <input
+            id="trip-name"
+            type="text"
+            className={styles.input}
+            value={tripConfig.routeName || ""}
+            onChange={(e) => setTripConfig(p => ({ ...p, routeName: e.target.value }))}
+            placeholder="e.g. Mexico → Patagonia"
+          />
+        </div>
         <div>
           <label className={styles.label} htmlFor="daily-budget">Daily budget (&pound;)</label>
           <input
@@ -64,17 +76,13 @@ export default function TripSettings({ tripConfig, setTripConfig, rates, setRate
               <span className={styles.rateGBP}>&pound;</span>
             </div>
           ))}
-          <button
-            type="button"
+          <ConfirmDeleteButton
+            onConfirm={() => setRates(DEFAULT_RATES)}
+            ariaLabel="Reset exchange rates to defaults"
             className={styles.resetBtn}
-            onClick={() => {
-              if (window.confirm("Reset exchange rates to defaults?")) {
-                setRates(DEFAULT_RATES);
-              }
-            }}
           >
             Reset rates
-          </button>
+          </ConfirmDeleteButton>
         </div>
       </details>
     </div>

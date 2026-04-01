@@ -28,6 +28,13 @@
 
 .tabInactive {
   background: transparent;
-  opacity: 0.5;
+  opacity: 0.6;
   box-shadow: none;
+}
+
+@media (max-width: 360px) {
+  .tab {
+    font-size: 12px;
+    padding: 8px 8px;
+  }
 }

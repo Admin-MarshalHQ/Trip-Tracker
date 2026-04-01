@@ -10,7 +10,7 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  opacity: 0.4;
+  opacity: 0.6;
   margin-bottom: 12px;
 }
 
@@ -36,7 +36,7 @@
   font-weight: 500;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  opacity: 0.5;
+  opacity: 0.6;
   margin-bottom: 4px;
 }
 
@@ -103,4 +103,19 @@
   white-space: nowrap;
   align-self: flex-end;
   margin-bottom: 0;
+}
+
+@media (max-width: 480px) {
+  .topRow {
+    flex-direction: column;
+  }
+  .bottomRow {
+    flex-wrap: wrap;
+  }
+  .field {
+    min-width: calc(50% - 5px);
+  }
+  .addBtn {
+    width: 100%;
+  }
 }

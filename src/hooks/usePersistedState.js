@@ -15,7 +15,11 @@ export function usePersistedState(key, defaultValue) {
   useEffect(() => {
     clearTimeout(timeoutRef.current);
     timeoutRef.current = setTimeout(() => {
-      localStorage.setItem(key, JSON.stringify(state));
+      try {
+        localStorage.setItem(key, JSON.stringify(state));
+      } catch (e) {
+        console.warn(`localStorage write failed for "${key}":`, e.message);
+      }
     }, 300);
     return () => clearTimeout(timeoutRef.current);
   }, [key, state]);

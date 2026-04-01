@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { clampPositive, clampPercent, parseFinancialInput } from '../validation';
+import { clampPositive, clampPercent, parseFinancialInput, safeRate } from '../validation';
 
 describe('clampPositive', () => {
   it('passes through positive values', () => {
@@ -60,5 +60,23 @@ describe('parseFinancialInput', () => {
 
   it('handles zero', () => {
     expect(parseFinancialInput('0')).toBe(0);
+  });
+});
+
+describe('safeRate', () => {
+  it('returns the rate when valid', () => {
+    expect(safeRate({ MXN: 0.045 }, 'MXN')).toBe(0.045);
+  });
+
+  it('returns 1 when rate is zero', () => {
+    expect(safeRate({ MXN: 0 }, 'MXN')).toBe(1);
+  });
+
+  it('returns 1 when currency is missing', () => {
+    expect(safeRate({}, 'MXN')).toBe(1);
+  });
+
+  it('returns 1 when rate is negative', () => {
+    expect(safeRate({ MXN: -0.5 }, 'MXN')).toBe(1);
   });
 });

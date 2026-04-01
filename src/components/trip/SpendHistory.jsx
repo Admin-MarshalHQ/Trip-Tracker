@@ -1,9 +1,12 @@
 import { useMemo, useState } from "react";
 import { TRIP_CATEGORIES, TRIP_CATEGORY_COLORS } from "../../constants/trip";
 import { fmt } from "../../utils/financial";
+import { safeRate } from "../../utils/validation";
+import { exportToCSV } from "../../utils/export";
+import ConfirmDeleteButton from "../ConfirmDeleteButton";
 import styles from "./SpendHistory.module.css";
 
-export default function SpendHistory({ spends, setSpends, rates }) {
+export default function SpendHistory({ spends, setSpends, rates, onDelete }) {
   const [filter, setFilter] = useState("all");
 
   const filtered = useMemo(() => {
@@ -14,7 +17,7 @@ export default function SpendHistory({ spends, setSpends, rates }) {
   const categoryTotals = useMemo(() => {
     const totals = {};
     for (const s of spends) {
-      const gbp = s.amount * (rates[s.currency] || 1);
+      const gbp = s.amount * safeRate(rates, s.currency);
       totals[s.category] = (totals[s.category] || 0) + gbp;
     }
     return Object.entries(totals).sort((a, b) => b[1] - a[1]);
@@ -72,11 +75,20 @@ export default function SpendHistory({ spends, setSpends, rates }) {
       {/* Spend log grouped by date */}
       {grouped.length > 0 && (
         <div>
-          <div className={styles.heading}>
-            Spend log {filter !== "all" && `— ${filter}`}
+          <div className={styles.headingRow}>
+            <div className={styles.heading}>
+              Spend log {filter !== "all" && `\u2014 ${filter}`}
+            </div>
+            <button
+              type="button"
+              className={styles.exportBtn}
+              onClick={() => exportToCSV(spends, ["description", "category", "amount", "currency", "date"], "trip-spending.csv")}
+            >
+              Export CSV
+            </button>
           </div>
           {grouped.map(([date, items]) => {
-            const dayTotal = items.reduce((sum, s) => sum + s.amount * (rates[s.currency] || 1), 0);
+            const dayTotal = items.reduce((sum, s) => sum + s.amount * safeRate(rates, s.currency), 0);
             return (
               <div key={date} className={styles.dateGroup}>
                 <div className={styles.dateHeader}>
@@ -85,7 +97,7 @@ export default function SpendHistory({ spends, setSpends, rates }) {
                 </div>
                 {items.map((s) => {
                   const c = TRIP_CATEGORY_COLORS[s.category] || "#888780";
-                  const gbp = s.amount * (rates[s.currency] || 1);
+                  const gbp = s.amount * safeRate(rates, s.currency);
                   const currencyInfo = s.currency !== "GBP" ? `${s.currencySymbol || ""}${s.amount.toLocaleString()} ${s.currency}` : null;
                   return (
                     <div key={s.id} className={styles.item}>
@@ -98,18 +110,13 @@ export default function SpendHistory({ spends, setSpends, rates }) {
                         </div>
                       </div>
                       <div className={styles.amount}>{fmt(Math.round(gbp))}</div>
-                      <button
-                        type="button"
+                      <ConfirmDeleteButton
+                        onConfirm={() => onDelete(s)}
+                        ariaLabel={`Delete ${s.description}`}
                         className={styles.deleteBtn}
-                        aria-label={`Delete ${s.description}`}
-                        onClick={() => {
-                          if (window.confirm(`Remove "${s.description}"?`)) {
-                            setSpends(p => p.filter(x => x.id !== s.id));
-                          }
-                        }}
                       >
                         {"\u00D7"}
-                      </button>
+                      </ConfirmDeleteButton>
                     </div>
                   );
                 })}

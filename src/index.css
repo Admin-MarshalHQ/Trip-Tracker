@@ -20,3 +20,18 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+*:focus-visible {
+  outline: 2px solid var(--color-blue);
+  outline-offset: 2px;
+}
+
+*:focus:not(:focus-visible) {
+  outline: none;
+}
+
+@media (max-width: 480px) {
+  input, select, button {
+    min-height: 44px;
+  }
+}

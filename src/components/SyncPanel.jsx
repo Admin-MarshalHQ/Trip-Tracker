@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { hasConfig } from "../firebase";
 import { generateSyncCode } from "../hooks/useCloudSync";
+import ConfirmDeleteButton from "./ConfirmDeleteButton";
 import styles from "./SyncPanel.module.css";
 
 export default function SyncPanel({ syncCode, setSyncCode, isSyncing, onJoin }) {
@@ -36,9 +37,7 @@ export default function SyncPanel({ syncCode, setSyncCode, isSyncing, onJoin }) 
   };
 
   const handleDisconnect = () => {
-    if (window.confirm("Stop syncing? Your local data will be kept.")) {
-      setSyncCode("");
-    }
+    setSyncCode("");
   };
 
   return (
@@ -56,9 +55,13 @@ export default function SyncPanel({ syncCode, setSyncCode, isSyncing, onJoin }) 
           <div className={styles.hint}>
             Enter this code on another device to sync your data.
           </div>
-          <button type="button" onClick={handleDisconnect} className={styles.disconnectBtn}>
+          <ConfirmDeleteButton
+            onConfirm={handleDisconnect}
+            ariaLabel="Disconnect sync"
+            className={styles.disconnectBtn}
+          >
             Disconnect
-          </button>
+          </ConfirmDeleteButton>
         </div>
       ) : (
         <>

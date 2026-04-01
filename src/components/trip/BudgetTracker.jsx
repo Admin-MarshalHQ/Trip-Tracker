@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import { fmt } from "../../utils/financial";
+import { safeRate } from "../../utils/validation";
 import { COLORS } from "../../constants/theme";
 import styles from "./BudgetTracker.module.css";
 
@@ -14,7 +15,7 @@ export default function BudgetTracker({ spends, tripConfig, totalSavings, rates 
     const dailyMap = {};
 
     for (const s of spends) {
-      const gbp = s.amount * (rates[s.currency] || 1);
+      const gbp = s.amount * safeRate(rates, s.currency);
       totalGBP += gbp;
       if (s.date === today) todayGBP += gbp;
       dailyMap[s.date] = (dailyMap[s.date] || 0) + gbp;
@@ -27,7 +28,20 @@ export default function BudgetTracker({ spends, tripConfig, totalSavings, rates 
     const remaining = totalBudget - totalGBP;
     const pctUsed = totalBudget > 0 ? (totalGBP / totalBudget) * 100 : 0;
 
-    return { totalGBP, todayGBP, avgDaily, dailyBudget, totalBudget, remaining, pctUsed, daysSinceStart, daysWithSpend };
+    // Forecast
+    const daysOfBudgetLeft = avgDaily > 0 ? Math.floor(remaining / avgDaily) : Infinity;
+    const runOutDate = avgDaily > 0 && daysOfBudgetLeft < 9999
+      ? new Date(Date.now() + daysOfBudgetLeft * 86400000).toLocaleDateString("en-GB", { day: "numeric", month: "short" })
+      : null;
+
+    // Velocity: compare last 7 days to overall
+    const sortedDates = Object.keys(dailyMap).sort();
+    const recentDates = sortedDates.slice(-7);
+    const recentTotal = recentDates.reduce((sum, d) => sum + (dailyMap[d] || 0), 0);
+    const recentAvg = recentDates.length > 0 ? recentTotal / recentDates.length : avgDaily;
+    const velocityPct = avgDaily > 0 ? ((recentAvg - avgDaily) / avgDaily) * 100 : 0;
+
+    return { totalGBP, todayGBP, avgDaily, dailyBudget, totalBudget, remaining, pctUsed, daysSinceStart, daysWithSpend, daysOfBudgetLeft, runOutDate, recentAvg, velocityPct };
   }, [spends, tripConfig, totalSavings, rates]);
 
   const budgetStatus = stats.avgDaily <= stats.dailyBudget ? "Under budget" : "Over budget";
@@ -91,7 +105,29 @@ export default function BudgetTracker({ spends, tripConfig, totalSavings, rates 
             : `${fmt(Math.round(stats.avgDaily - stats.dailyBudget))} over daily target`
           }
         </div>
+        {stats.daysWithSpend >= 2 && (
+          <div className={styles.velocity}>
+            {stats.velocityPct > 15 ? "\u2191 Spending increasing" :
+             stats.velocityPct < -15 ? "\u2193 Spending decreasing" :
+             "\u2014 Steady pace"}
+          </div>
+        )}
       </div>
+
+      {/* Forecast */}
+      {stats.remaining > 0 && stats.avgDaily > 0 && (
+        <div className={styles.forecastSection}>
+          <div className={styles.forecastRow}>
+            <span>At this pace, funds last</span>
+            <span className={styles.forecastValue} style={{ color: stats.daysOfBudgetLeft > 30 ? COLORS.green : stats.daysOfBudgetLeft > 14 ? COLORS.orange : COLORS.red }}>
+              {stats.daysOfBudgetLeft} more days
+            </span>
+          </div>
+          {stats.runOutDate && (
+            <div className={styles.forecastHint}>Until approximately {stats.runOutDate}</div>
+          )}
+        </div>
+      )}
     </div>
   );
 }

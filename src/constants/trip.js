@@ -58,4 +58,5 @@ export const TRIP_DEFAULTS = {
   dailyBudget: 50,
   totalBudget: 0,
   startDate: "2026-06-08",
+  routeName: "Mexico \u2192 Patagonia",
 };

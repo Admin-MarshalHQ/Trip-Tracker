@@ -1,5 +1,6 @@
 import { DEFAULT } from "../constants/defaults";
 import { parseFinancialInput, clampPercent } from "../utils/validation";
+import ConfirmDeleteButton from "./ConfirmDeleteButton";
 import styles from "./SettingsPanel.module.css";
 
 const SETTINGS_FIELDS = [
@@ -47,18 +48,16 @@ export default function SettingsPanel({ showSettings, setShowSettings, s, setS, 
             </div>
           ))}
           <div className={styles.resetRow}>
-            <button
-              type="button"
-              onClick={() => {
-                if (window.confirm("Reset all financial assumptions to defaults?")) {
-                  setS(DEFAULT);
-                  setActuals({ apr: null, may: null, jun: null });
-                }
+            <ConfirmDeleteButton
+              onConfirm={() => {
+                setS(DEFAULT);
+                setActuals({ apr: null, may: null, jun: null });
               }}
+              ariaLabel="Reset all financial assumptions to defaults"
               className={styles.resetBtn}
             >
               Reset to defaults
-            </button>
+            </ConfirmDeleteButton>
           </div>
         </div>
       )}
