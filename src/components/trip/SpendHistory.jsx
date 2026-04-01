@@ -107,6 +107,7 @@ export default function SpendHistory({ spends, setSpends, rates, onDelete }) {
                         <div className={styles.itemMeta}>
                           {s.category}
                           {currencyInfo && <span className={styles.currencyNote}> &middot; {currencyInfo}</span>}
+                          {s.groupId && <span className={styles.splitNote}> &middot; {s.currencySymbol}{s.totalAmount.toLocaleString()} / {s.dayCount} nights</span>}
                         </div>
                       </div>
                       <div className={styles.amount}>{fmt(Math.round(gbp))}</div>

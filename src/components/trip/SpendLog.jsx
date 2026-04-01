@@ -72,6 +72,17 @@ export default function SpendLog({ draft, setDraft, onAdd, currency, setCurrency
             onChange={(e) => setDraft(p => ({ ...p, date: e.target.value }))}
           />
         </div>
+        <div className={styles.field}>
+          <label className={styles.label} htmlFor="trip-end-date">End date</label>
+          <input
+            id="trip-end-date"
+            type="date"
+            className={styles.input}
+            value={draft.endDate}
+            min={draft.date}
+            onChange={(e) => setDraft(p => ({ ...p, endDate: e.target.value }))}
+          />
+        </div>
         <button
           type="button"
           onClick={onAdd}

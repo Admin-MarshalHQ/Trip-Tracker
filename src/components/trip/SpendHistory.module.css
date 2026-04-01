@@ -148,6 +148,12 @@
   justify-content: center;
 }
 
+.splitNote {
+  font-size: 10px;
+  opacity: 0.5;
+  font-style: italic;
+}
+
 .empty {
   text-align: center;
   padding: 3rem 1rem;

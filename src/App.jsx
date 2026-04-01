@@ -49,6 +49,7 @@ export default function App() {
     category: "Food & Drink",
     amount: "",
     date: new Date().toISOString().slice(0, 10),
+    endDate: "",
   });
 
   // Cloud sync — auto-syncs all data to a single shared Firestore document
@@ -113,29 +114,76 @@ export default function App() {
     if (!tripDraft.description || !tripDraft.amount) return;
     const currencyObj = CURRENCIES.find(c => c.code === tripCurrency);
     const desc = tripDraft.description.trim();
-    setTripSpends(p => [...p, {
-      ...tripDraft,
-      description: desc,
-      amount: parseFloat(tripDraft.amount),
-      currency: tripCurrency,
-      currencySymbol: currencyObj?.symbol || "",
-      id: Date.now(),
-    }]);
+    const totalAmount = parseFloat(tripDraft.amount);
+    const startDate = tripDraft.date;
+    const endDate = tripDraft.endDate;
+
+    if (endDate && endDate > startDate) {
+      const start = new Date(startDate + "T00:00:00");
+      const end = new Date(endDate + "T00:00:00");
+      const dayCount = Math.round((end - start) / (1000 * 60 * 60 * 24));
+      const dailyAmount = Math.round((totalAmount / dayCount) * 100) / 100;
+      const groupId = Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+      const newSpends = [];
+      for (let i = 0; i < dayCount; i++) {
+        const d = new Date(start);
+        d.setDate(d.getDate() + i);
+        const dateStr = d.toISOString().slice(0, 10);
+        newSpends.push({
+          description: desc,
+          category: tripDraft.category,
+          amount: dailyAmount,
+          currency: tripCurrency,
+          currencySymbol: currencyObj?.symbol || "",
+          date: dateStr,
+          id: Date.now() + i,
+          groupId,
+          totalAmount,
+          dayCount,
+        });
+      }
+      setTripSpends(p => [...p, ...newSpends]);
+      addToast(`Logged ${currencyObj?.symbol || ""}${totalAmount} across ${dayCount} nights`);
+    } else {
+      setTripSpends(p => [...p, {
+        description: desc,
+        category: tripDraft.category,
+        amount: totalAmount,
+        currency: tripCurrency,
+        currencySymbol: currencyObj?.symbol || "",
+        date: startDate,
+        id: Date.now(),
+      }]);
+      addToast(`Logged ${currencyObj?.symbol || ""}${tripDraft.amount}`);
+    }
+
     setTripDraft({
       description: "",
       category: tripDraft.category,
       amount: "",
       date: tripDraft.date,
+      endDate: "",
     });
-    addToast(`Logged ${currencyObj?.symbol || ""}${tripDraft.amount}`);
   };
 
   const handleDeleteTripSpend = useCallback((spend) => {
-    setTripSpends(p => p.filter(x => x.id !== spend.id));
-    addToast(`Removed "${spend.description}"`, {
-      type: "info",
-      undoAction: () => setTripSpends(p => [...p, spend].sort((a, b) => a.id - b.id)),
-    });
+    if (spend.groupId) {
+      setTripSpends(p => {
+        const removed = p.filter(x => x.groupId === spend.groupId);
+        const remaining = p.filter(x => x.groupId !== spend.groupId);
+        addToast(`Removed "${spend.description}" (${removed.length} nights)`, {
+          type: "info",
+          undoAction: () => setTripSpends(prev => [...prev, ...removed].sort((a, b) => a.id - b.id)),
+        });
+        return remaining;
+      });
+    } else {
+      setTripSpends(p => p.filter(x => x.id !== spend.id));
+      addToast(`Removed "${spend.description}"`, {
+        type: "info",
+        undoAction: () => setTripSpends(p => [...p, spend].sort((a, b) => a.id - b.id)),
+      });
+    }
   }, [setTripSpends, addToast]);
 
   return (
