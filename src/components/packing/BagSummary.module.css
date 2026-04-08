@@ -1,0 +1,61 @@
+.wrapper {
+  margin-bottom: 1.5rem;
+}
+
+.bags {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.card {
+  padding: 14px;
+  border-radius: var(--radius-md);
+  background: var(--bg-card);
+  border: 0.5px solid rgba(128, 128, 128, 0.08);
+  box-shadow: var(--shadow-card);
+}
+
+.bagName {
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.barTrack {
+  height: 8px;
+  border-radius: 4px;
+  background: rgba(128, 128, 128, 0.1);
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.barFill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.4s ease, background 0.3s ease;
+  min-width: 2px;
+}
+
+.stats {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  font-family: var(--font-mono);
+}
+
+.volume {
+  font-weight: 600;
+}
+
+.count {
+  opacity: 0.5;
+}
+
+.unassigned {
+  text-align: center;
+  font-size: 11px;
+  opacity: 0.5;
+  margin-top: 8px;
+  font-style: italic;
+}

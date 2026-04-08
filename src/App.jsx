@@ -28,6 +28,9 @@ import BudgetTracker from "./components/trip/BudgetTracker";
 import DailyTrendChart from "./components/trip/DailyTrendChart";
 import SpendHistory from "./components/trip/SpendHistory";
 import TripSettings from "./components/trip/TripSettings";
+import PackingForm from "./components/packing/PackingForm";
+import BagSummary from "./components/packing/BagSummary";
+import PackingList from "./components/packing/PackingList";
 
 import styles from "./App.module.css";
 
@@ -52,14 +55,20 @@ export default function App() {
     endDate: "",
   });
 
+  // Packing list state
+  const [packingItems, setPackingItems] = usePersistedState("trip-tracker-packing", []);
+  const [packingDraft, setPackingDraft] = useState({
+    name: "", category: "Clothing", bag: "unassigned", owned: true, volume: 1,
+  });
+
   // Cloud sync — auto-syncs all data to a single shared Firestore document
   const syncSetters = useMemo(() => ({
-    setS, setActuals, setExpenses, setTripSpends, setTripConfig, setRates, setTripCurrency,
-  }), [setS, setActuals, setExpenses, setTripSpends, setTripConfig, setRates, setTripCurrency]);
+    setS, setActuals, setExpenses, setTripSpends, setTripConfig, setRates, setTripCurrency, setPackingItems,
+  }), [setS, setActuals, setExpenses, setTripSpends, setTripConfig, setRates, setTripCurrency, setPackingItems]);
 
   const allSyncState = useMemo(() => ({
-    settings: s, actuals, expenses, tripSpends, tripConfig, rates, tripCurrency,
-  }), [s, actuals, expenses, tripSpends, tripConfig, rates, tripCurrency]);
+    settings: s, actuals, expenses, tripSpends, tripConfig, rates, tripCurrency, packingItems,
+  }), [s, actuals, expenses, tripSpends, tripConfig, rates, tripCurrency, packingItems]);
 
   const { isSyncing } = useCloudSync(allSyncState, syncSetters);
 
@@ -186,10 +195,32 @@ export default function App() {
     }
   }, [setTripSpends, addToast]);
 
+  const handleAddPackingItem = () => {
+    if (!packingDraft.name) return;
+    const name = packingDraft.name.trim();
+    setPackingItems(p => [...p, {
+      ...packingDraft,
+      name,
+      volume: parseFloat(packingDraft.volume) || 1,
+      packed: false,
+      id: Date.now(),
+    }]);
+    setPackingDraft(prev => ({ ...prev, name: "", volume: 1 }));
+    addToast(`Added "${name}"`);
+  };
+
+  const handleDeletePackingItem = useCallback((item) => {
+    setPackingItems(p => p.filter(x => x.id !== item.id));
+    addToast(`Removed "${item.name}"`, {
+      type: "info",
+      undoAction: () => setPackingItems(p => [...p, item].sort((a, b) => a.id - b.id)),
+    });
+  }, [setPackingItems, addToast]);
+
   return (
     <div className={styles.container}>
       <Header target={s.target} routeName={tripConfig.routeName} startDate={tripConfig.startDate} />
-      <TabSwitcher tab={tab} setTab={setTab} expenseCount={expenses.length} tripSpendCount={tripSpends.length} />
+      <TabSwitcher tab={tab} setTab={setTab} expenseCount={expenses.length} tripSpendCount={tripSpends.length} packingCount={packingItems.length} />
 
       {tab === "savings" && (
         <div role="tabpanel" id="panel-savings" aria-label="Savings tracker">
@@ -330,6 +361,24 @@ export default function App() {
             rates={rates}
             setRates={setRates}
           />
+        </div>
+      )}
+
+      {tab === "packing" && (
+        <div role="tabpanel" id="panel-packing" aria-label="Packing list">
+          <PackingForm draft={packingDraft} setDraft={setPackingDraft} onAdd={handleAddPackingItem} />
+
+          {packingItems.length > 0 && (<>
+            <BagSummary items={packingItems} />
+            <PackingList items={packingItems} setItems={setPackingItems} onDelete={handleDeletePackingItem} />
+          </>)}
+
+          {packingItems.length === 0 && (
+            <div className={styles.emptyState}>
+              <div className={styles.emptyTitle}>No packing items yet</div>
+              <div className={styles.emptySubtitle}>Add gear, clothes, and essentials above</div>
+            </div>
+          )}
         </div>
       )}
 

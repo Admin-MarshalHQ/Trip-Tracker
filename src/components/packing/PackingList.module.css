@@ -1,0 +1,137 @@
+.headingRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.heading {
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  opacity: 0.6;
+}
+
+.toBuy {
+  color: #EF9F27;
+  opacity: 1;
+}
+
+.exportBtn {
+  background: none;
+  border: 0.5px solid rgba(128, 128, 128, 0.2);
+  border-radius: 6px;
+  padding: 4px 12px;
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+  color: inherit;
+  font-family: inherit;
+  opacity: 0.5;
+}
+
+.list {
+  display: grid;
+  gap: 6px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: rgba(128, 128, 128, 0.03);
+  border: 0.5px solid rgba(128, 128, 128, 0.08);
+  transition: background 0.15s ease, opacity 0.3s ease;
+}
+
+.item:active {
+  background: var(--bg-card-hover);
+}
+
+.checkbox {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--color-green);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.indicator {
+  width: 4px;
+  height: 28px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.content {
+  flex: 1;
+  min-width: 0;
+}
+
+.itemName {
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.buyPill {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: rgba(239, 159, 39, 0.15);
+  color: #EF9F27;
+  flex-shrink: 0;
+}
+
+.itemMeta {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.metaSelect {
+  font-size: 11px;
+  opacity: 0.55;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: inherit;
+  font-family: inherit;
+}
+
+.dot {
+  font-size: 11px;
+  opacity: 0.3;
+}
+
+.volumeText {
+  font-size: 11px;
+  opacity: 0.55;
+  font-family: var(--font-mono);
+}
+
+.deleteBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  opacity: 0.6;
+  padding: 4px;
+  line-height: 1;
+  color: inherit;
+  min-width: 44px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

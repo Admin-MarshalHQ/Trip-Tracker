@@ -33,6 +33,7 @@ export function useCloudSync(allState, setters) {
       if (data.tripConfig) setters.setTripConfig(data.tripConfig);
       if (data.rates) setters.setRates(data.rates);
       if (data.tripCurrency) setters.setTripCurrency(data.tripCurrency);
+      if (data.packingItems) setters.setPackingItems(data.packingItems);
       setTimeout(() => { isRemoteUpdate.current = false; }, 200);
     });
 
@@ -58,6 +59,7 @@ export function useCloudSync(allState, setters) {
           tripConfig: allState.tripConfig,
           rates: allState.rates,
           tripCurrency: allState.tripCurrency,
+          packingItems: allState.packingItems,
           _timestamp: Date.now(),
         });
         setTimeout(() => { isRemoteUpdate.current = false; }, 200);

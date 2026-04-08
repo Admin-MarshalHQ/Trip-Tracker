@@ -1,10 +1,11 @@
 import styles from "./TabSwitcher.module.css";
 
-export default function TabSwitcher({ tab, setTab, expenseCount, tripSpendCount }) {
+export default function TabSwitcher({ tab, setTab, expenseCount, tripSpendCount, packingCount }) {
   const tabs = [
     { key: "savings", label: "Savings" },
     { key: "expenses", label: `Pre-trip${expenseCount > 0 ? ` (${expenseCount})` : ""}` },
     { key: "trip", label: `In-trip${tripSpendCount > 0 ? ` (${tripSpendCount})` : ""}` },
+    { key: "packing", label: `Packing${packingCount > 0 ? ` (${packingCount})` : ""}` },
   ];
 
   return (
