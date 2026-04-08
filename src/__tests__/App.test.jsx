@@ -5,6 +5,7 @@ import App from '../App';
 describe('App', () => {
   beforeEach(() => {
     localStorage.clear();
+    sessionStorage.setItem("trip-splash-dismissed", "1");
   });
 
   it('renders without crashing', () => {

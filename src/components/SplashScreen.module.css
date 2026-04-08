@@ -1,0 +1,286 @@
+/* ---- Keyframes ---- */
+
+@keyframes gradientShift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes revealUp {
+  from { opacity: 0; transform: translateY(24px); filter: blur(3px); }
+  to   { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  25%      { transform: translate(5px, -15px) rotate(5deg); }
+  50%      { transform: translate(-3px, -25px) rotate(-3deg); }
+  75%      { transform: translate(8px, -10px) rotate(4deg); }
+}
+
+@keyframes fadeInIcon {
+  from { opacity: 0; transform: scale(0.3); }
+  to   { opacity: 0.35; transform: scale(1); }
+}
+
+@keyframes splashExit {
+  to { opacity: 0; transform: scale(1.05); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { text-shadow: 0 0 30px rgba(255, 255, 255, 0.15); }
+  50%      { text-shadow: 0 0 60px rgba(255, 255, 255, 0.3), 0 0 100px rgba(55, 138, 221, 0.15); }
+}
+
+@keyframes drawRoute {
+  from { width: 0; }
+  to   { width: 100%; }
+}
+
+@keyframes routeDotReveal {
+  from { opacity: 0; transform: scale(0.5); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* ---- Layout ---- */
+
+.splash {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.splash.exiting {
+  animation: splashExit 0.6s ease-in forwards;
+  pointer-events: none;
+}
+
+.gradientBg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: linear-gradient(-45deg, #060611, #0a0f2e, #0d1b3e, #091a2a, #060611);
+  background-size: 400% 400%;
+  animation: gradientShift 12s ease infinite;
+}
+
+/* Subtle star-like dots */
+.gradientBg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.15) 50%, transparent 100%),
+    radial-gradient(1px 1px at 30% 65%, rgba(255,255,255,0.1) 50%, transparent 100%),
+    radial-gradient(1px 1px at 55% 15%, rgba(255,255,255,0.12) 50%, transparent 100%),
+    radial-gradient(1px 1px at 70% 80%, rgba(255,255,255,0.08) 50%, transparent 100%),
+    radial-gradient(1px 1px at 85% 40%, rgba(255,255,255,0.1) 50%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 45% 90%, rgba(255,255,255,0.15) 50%, transparent 100%),
+    radial-gradient(1px 1px at 90% 10%, rgba(255,255,255,0.1) 50%, transparent 100%);
+}
+
+/* ---- Floating icons ---- */
+
+.floatingIcons {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.icon {
+  position: absolute;
+  opacity: 0;
+  animation: fadeInIcon 0.6s ease forwards, float 6s ease-in-out infinite;
+}
+
+.icon1 { top: 8%;  left: 8%;   font-size: 28px; animation-delay: 0.1s, 0.1s; animation-duration: 0.6s, 5s; }
+.icon2 { top: 5%;  right: 12%; font-size: 24px; animation-delay: 0.3s, 0.3s; animation-duration: 0.6s, 7s; }
+.icon3 { top: 78%; left: 10%;  font-size: 22px; animation-delay: 0.5s, 0.5s; animation-duration: 0.6s, 6s; }
+.icon4 { top: 82%; right: 8%;  font-size: 28px; animation-delay: 0.7s, 0.7s; animation-duration: 0.6s, 4.5s; }
+.icon5 { top: 35%; left: 4%;   font-size: 32px; animation-delay: 0.2s, 0.2s; animation-duration: 0.6s, 5.5s; }
+.icon6 { top: 55%; right: 6%;  font-size: 26px; animation-delay: 0.9s, 0.9s; animation-duration: 0.6s, 6.5s; }
+.icon7 { top: 20%; right: 4%;  font-size: 24px; animation-delay: 0.4s, 0.4s; animation-duration: 0.6s, 5s; }
+.icon8 { top: 90%; left: 42%;  font-size: 26px; animation-delay: 0.6s, 0.6s; animation-duration: 0.6s, 4s; }
+
+/* ---- Content ---- */
+
+.content {
+  z-index: 2;
+  text-align: center;
+  color: white;
+  position: relative;
+  padding: 0 1.5rem;
+  max-width: 400px;
+}
+
+.routeText {
+  font-family: var(--font-sans);
+  font-size: 38px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.word, .arrow {
+  display: inline-block;
+  opacity: 0;
+  animation: revealUp 0.6s ease forwards;
+}
+
+.arrow {
+  margin: 0 10px;
+}
+
+/* ---- Route trail ---- */
+
+.routeTrail {
+  margin-top: 1.5rem;
+  opacity: 0;
+  animation: revealUp 0.8s ease 1.0s forwards;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: rgba(255, 255, 255, 0.35);
+  line-height: 1.8;
+  position: relative;
+  overflow: hidden;
+}
+
+.routeStop {
+  display: inline;
+}
+
+.routeStopActive {
+  color: var(--color-blue);
+}
+
+.routeDots {
+  color: rgba(255, 255, 255, 0.2);
+  letter-spacing: 0.15em;
+}
+
+/* ---- Countdown ---- */
+
+.countdown {
+  margin-top: 1.75rem;
+}
+
+.daysNumber {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 88px;
+  font-weight: 700;
+  line-height: 1;
+  color: #fff;
+  opacity: 0;
+  animation: revealUp 0.8s ease 1.4s forwards, pulseGlow 3s ease-in-out 2.2s infinite;
+}
+
+.daysLabel {
+  font-size: 13px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  opacity: 0;
+  animation: revealUp 0.5s ease 1.8s forwards;
+  color: rgba(255, 255, 255, 0.5);
+  margin-top: 0.5rem;
+}
+
+.dateLine {
+  font-size: 12px;
+  opacity: 0;
+  animation: revealUp 0.5s ease 2.1s forwards;
+  margin-top: 0.5rem;
+  color: rgba(255, 255, 255, 0.3);
+  font-family: var(--font-mono);
+}
+
+.enterBtn {
+  margin-top: 2.5rem;
+  opacity: 0;
+  animation: revealUp 0.5s ease 2.8s forwards;
+  padding: 14px 44px;
+  border: 1.5px solid rgba(255, 255, 255, 0.5);
+  border-radius: 50px;
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: white;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.enterBtn:hover {
+  background: rgba(255, 255, 255, 0.14);
+  transform: scale(1.05);
+  border-color: rgba(255, 255, 255, 0.8);
+}
+
+.enterBtn:active {
+  transform: scale(0.97);
+}
+
+/* ---- Mobile ---- */
+
+@media (max-width: 480px) {
+  .routeText {
+    font-size: 28px;
+  }
+  .daysNumber {
+    font-size: 68px;
+  }
+  .routeTrail {
+    font-size: 10px;
+  }
+  .enterBtn {
+    padding: 12px 32px;
+    font-size: 15px;
+  }
+  .icon {
+    font-size: 20px !important;
+  }
+}
+
+@media (max-width: 360px) {
+  .routeText {
+    font-size: 24px;
+  }
+  .daysNumber {
+    font-size: 56px;
+  }
+}
+
+/* ---- Reduced motion ---- */
+
+@media (prefers-reduced-motion: reduce) {
+  .gradientBg {
+    animation: none;
+  }
+  .icon {
+    animation: none;
+    opacity: 0.25;
+  }
+  .word, .arrow, .daysNumber, .daysLabel, .dateLine, .enterBtn, .routeTrail {
+    animation: none;
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+  .daysNumber {
+    text-shadow: none;
+  }
+  .splash.exiting {
+    animation: none;
+    opacity: 0;
+  }
+}

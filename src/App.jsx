@@ -7,6 +7,7 @@ import { usePersistedState } from "./hooks/usePersistedState";
 import { useCloudSync } from "./hooks/useCloudSync";
 import { useToast } from "./hooks/useToast";
 
+import SplashScreen from "./components/SplashScreen";
 import Header from "./components/Header";
 import TabSwitcher from "./components/TabSwitcher";
 import HeroCard from "./components/HeroCard";
@@ -41,6 +42,7 @@ export default function App() {
   const [showSettings, setShowSettings] = useState(false);
   const [actuals, setActuals] = usePersistedState("trip-tracker-actuals", { apr: null, may: null, jun: null });
   const [tab, setTab] = useState("savings");
+  const [showSplash, setShowSplash] = useState(() => !sessionStorage.getItem("trip-splash-dismissed"));
   const [expenses, setExpenses] = usePersistedState("trip-tracker-expenses", []);
   const [draft, setDraft] = useState({ item: "", category: "Gear", amount: "", paid: false });
 
@@ -224,8 +226,21 @@ export default function App() {
     });
   }, [setPackingItems, addToast]);
 
+  const handleDismissSplash = () => {
+    setShowSplash(false);
+    sessionStorage.setItem("trip-splash-dismissed", "1");
+  };
+
   return (
-    <div className={styles.container}>
+    <>
+      {showSplash && (
+        <SplashScreen
+          routeName={tripConfig.routeName}
+          startDate={tripConfig.startDate}
+          onDismiss={handleDismissSplash}
+        />
+      )}
+    <div className={styles.container} style={showSplash ? { display: "none" } : undefined}>
       <Header target={s.target} routeName={tripConfig.routeName} startDate={tripConfig.startDate} />
       <TabSwitcher tab={tab} setTab={setTab} expenseCount={expenses.length} tripSpendCount={tripSpends.length} packingCount={packingItems.length} />
 
@@ -394,5 +409,6 @@ export default function App() {
 
       <Toast toasts={toasts} onDismiss={removeToast} />
     </div>
+    </>
   );
 }
