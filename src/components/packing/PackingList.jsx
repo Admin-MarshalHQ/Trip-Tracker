@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { PACKING_CATEGORIES, PACKING_CATEGORY_COLORS, BAGS } from "../../constants/packing";
+import { PACKING_CATEGORIES, PACKING_CATEGORY_COLORS, BAGS, SIZES } from "../../constants/packing";
 import { exportToCSV } from "../../utils/export";
 import ConfirmDeleteButton from "../ConfirmDeleteButton";
 import styles from "./PackingList.module.css";
@@ -68,7 +68,17 @@ export default function PackingList({ items, setItems, onDelete }) {
                     {BAGS.map(b => <option key={b.key} value={b.key}>{b.label}</option>)}
                   </select>
                   <span className={styles.dot}>&middot;</span>
-                  <span className={styles.volumeText}>{item.volume}L</span>
+                  <select
+                    value={item.size || "M"}
+                    onChange={(e) => {
+                      const vol = SIZES.find(s => s.key === e.target.value)?.volume || 1.5;
+                      setItems(p => p.map(x => x.id === item.id ? { ...x, size: e.target.value, volume: vol } : x));
+                    }}
+                    className={styles.metaSelect}
+                    aria-label={`Size for ${item.name}`}
+                  >
+                    {SIZES.map(s => <option key={s.key} value={s.key}>{s.label}</option>)}
+                  </select>
                 </div>
               </div>
               <ConfirmDeleteButton

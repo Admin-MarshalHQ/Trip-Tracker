@@ -23,6 +23,7 @@ import ExpenseForm from "./components/expenses/ExpenseForm";
 import ExpenseSummary from "./components/expenses/ExpenseSummary";
 import CategoryBreakdown from "./components/expenses/CategoryBreakdown";
 import ExpenseList from "./components/expenses/ExpenseList";
+import { SIZES } from "./constants/packing";
 import SpendLog from "./components/trip/SpendLog";
 import BudgetTracker from "./components/trip/BudgetTracker";
 import DailyTrendChart from "./components/trip/DailyTrendChart";
@@ -31,6 +32,7 @@ import TripSettings from "./components/trip/TripSettings";
 import PackingForm from "./components/packing/PackingForm";
 import BagSummary from "./components/packing/BagSummary";
 import PackingList from "./components/packing/PackingList";
+import ImportExpenses from "./components/packing/ImportExpenses";
 
 import styles from "./App.module.css";
 
@@ -58,7 +60,7 @@ export default function App() {
   // Packing list state
   const [packingItems, setPackingItems] = usePersistedState("trip-tracker-packing", []);
   const [packingDraft, setPackingDraft] = useState({
-    name: "", category: "Clothing", bag: "unassigned", owned: true, volume: 1,
+    name: "", category: "Clothing", bag: "unassigned", owned: true, size: "M",
   });
 
   // Cloud sync — auto-syncs all data to a single shared Firestore document
@@ -195,17 +197,22 @@ export default function App() {
     }
   }, [setTripSpends, addToast]);
 
-  const handleAddPackingItem = () => {
-    if (!packingDraft.name) return;
-    const name = packingDraft.name.trim();
+  const handleAddPackingItem = (item) => {
+    const name = (item?.name || packingDraft.name || "").trim();
+    if (!name) return;
+    const sizeKey = item?.size || packingDraft.size || "M";
+    const volume = SIZES.find(s => s.key === sizeKey)?.volume || 1.5;
     setPackingItems(p => [...p, {
-      ...packingDraft,
       name,
-      volume: parseFloat(packingDraft.volume) || 1,
+      category: item?.category || packingDraft.category,
+      bag: item?.bag || packingDraft.bag,
+      owned: item?.owned ?? packingDraft.owned,
+      size: sizeKey,
+      volume,
       packed: false,
-      id: Date.now(),
+      id: Date.now() + Math.random(),
     }]);
-    setPackingDraft(prev => ({ ...prev, name: "", volume: 1 }));
+    if (!item) setPackingDraft(prev => ({ ...prev, name: "" }));
     addToast(`Added "${name}"`);
   };
 
@@ -367,6 +374,7 @@ export default function App() {
       {tab === "packing" && (
         <div role="tabpanel" id="panel-packing" aria-label="Packing list">
           <PackingForm draft={packingDraft} setDraft={setPackingDraft} onAdd={handleAddPackingItem} />
+          <ImportExpenses expenses={expenses} packingItems={packingItems} onImport={handleAddPackingItem} />
 
           {packingItems.length > 0 && (<>
             <BagSummary items={packingItems} />

@@ -1,4 +1,4 @@
-import { PACKING_CATEGORIES, BAGS } from "../../constants/packing";
+import { PACKING_CATEGORIES, BAGS, SIZES } from "../../constants/packing";
 import styles from "./PackingForm.module.css";
 
 export default function PackingForm({ draft, setDraft, onAdd }) {
@@ -6,7 +6,7 @@ export default function PackingForm({ draft, setDraft, onAdd }) {
     <div className={styles.form}>
       <div className={styles.heading}>Add item</div>
       <div className={styles.topRow}>
-        <div className={styles.field} style={{ flex: 2 }}>
+        <div className={styles.field}>
           <label className={styles.label} htmlFor="pack-name">Item</label>
           <input
             id="pack-name"
@@ -15,18 +15,6 @@ export default function PackingForm({ draft, setDraft, onAdd }) {
             className={styles.input}
             value={draft.name}
             onChange={(e) => setDraft(p => ({ ...p, name: e.target.value }))}
-          />
-        </div>
-        <div className={styles.field} style={{ flex: 1 }}>
-          <label className={styles.label} htmlFor="pack-volume">Litres</label>
-          <input
-            id="pack-volume"
-            type="number"
-            min="0.5"
-            step="0.5"
-            className={styles.input}
-            value={draft.volume}
-            onChange={(e) => setDraft(p => ({ ...p, volume: e.target.value }))}
           />
         </div>
       </div>
@@ -64,6 +52,25 @@ export default function PackingForm({ draft, setDraft, onAdd }) {
           />
           <label htmlFor="owned-check" className={styles.ownedLabel}>Need to buy</label>
         </div>
+      </div>
+      <div className={styles.sizeRow}>
+        <span className={styles.label}>Size</span>
+        <div className={styles.sizePicker}>
+          {SIZES.map(s => (
+            <button
+              key={s.key}
+              type="button"
+              className={`${styles.sizeBtn} ${draft.size === s.key ? styles.sizeBtnActive : ""}`}
+              onClick={() => setDraft(p => ({ ...p, size: s.key }))}
+              title={s.hint}
+            >
+              {s.label}
+            </button>
+          ))}
+        </div>
+        <span className={styles.sizeHint}>
+          {SIZES.find(s => s.key === draft.size)?.hint}
+        </span>
       </div>
       <button
         type="button"

@@ -22,3 +22,10 @@ export const BAGS = [
   { key: "main", label: "Osprey 40L", capacity: 40 },
   { key: "day", label: "Day Pack 13L", capacity: 13 },
 ];
+
+export const SIZES = [
+  { key: "S", label: "S", volume: 0.5, hint: "Socks, charger, passport" },
+  { key: "M", label: "M", volume: 1.5, hint: "T-shirt, toiletry bag" },
+  { key: "L", label: "L", volume: 3, hint: "Jacket, laptop, jeans" },
+  { key: "XL", label: "XL", volume: 5, hint: "Towel, sleeping bag, shoes" },
+];
